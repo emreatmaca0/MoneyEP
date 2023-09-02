@@ -174,7 +174,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New Record</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -194,51 +194,53 @@
 
                 <form>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Date</label>
-                        <input type="date">
+                        <label for="date-input" class="col-form-label">Date</label>
+                        <input type="date" id="date-input">
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Type of transaction</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Revenue</option>
-                            <option value="1">Expense</option>
-                            <option value="2">Remittance</option>
+                        <label for="type-input" class="col-form-label">Type of transaction</label>
+                        <select class="form-select" aria-label="Type of transaction" id="type-input">
+                            <option selected value="revenue">Revenue</option>
+                            <option value="expense">Expense</option>
+                            <option value="remittance">Remittance</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Amount</label>
+                        <label for="amount-input" class="col-form-label">Amount</label>
                         <div class="input-group mb-3">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>₺</option>
-                                <option value="1">$</option>
-                                <option value="2">€</option>
+                            <select class="form-select" aria-label="Currency">
+                                <option selected value="1">₺</option>
+                                <option value="2">$</option>
+                                <option value="3">€</option>
                             </select>
-                            <input type="text" class="form-control" placeholder="102,55" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="102,55" aria-label="Amount" id="amount-input">
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Category</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Maaş</option>
-                            <option value="1">Kira</option>
-                            <option value="2">Avanta</option>
-                            <option value="3">Diğer</option>
+                    <div class="mb-3 category-container">
+                        <label for="category-input" class="col-form-label">Category</label>
+                        <select class="form-select" aria-label="Category" id="category-input">
+                            <option selected value="salary">Salary</option>
+                            <option value="rental-income">Rental Income</option>
+                            <option value="freebie">Freebie</option>
+                            <option value="investment">Investment</option>
+                            <option value="sales">Sales</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Account</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <label for="account-input" class="col-form-label">Account</label>
+                        <select class="form-select" aria-label="Account" id="account-input">
                             <option selected>Turkish Lira Cash</option>
                             <option value="1">Create a new account...</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Description</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="description-input" class="col-form-label">Description</label>
+                        <input type="text" class="form-control" id="description-input">
                     </div>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Detailed Description</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <label for="dd-input" class="col-form-label">Detailed Description</label>
+                        <textarea class="form-control" id="dd-input"></textarea>
                     </div>
                 </form>
 
@@ -253,6 +255,49 @@
 
 
 <script>
+
+
+const amount= document.getElementById("category-input").parentElement.previousElementSibling;
+const clone = amount.cloneNode(true);
+clone.firstElementChild.innerHTML="Commission";
+clone.firstElementChild.for="commission-input";
+clone.lastElementChild.lastElementChild.value=0;
+clone.id="commission-area";
+clone.lastElementChild.lastElementChild.id="commission-input";
+
+
+
+
+    // Seçenek değiştikçe çalışacak işlevi tanımlayın
+    function optionChanged() {
+        var selectedOption = document.getElementById("type-input").value;
+        if (selectedOption == "revenue") {
+            if(document.getElementById("commission-area")!=null){
+                document.getElementById("commission-area").remove();
+            }
+            document.getElementById("category-input").previousElementSibling.innerHTML="Category";
+            document.getElementById("category-input").innerHTML
+            ='<option selected value="salary">Salary</option><option value="rental-income">Rental Income</option><option value="freebie">Freebie</option> <option value="investment">Investment</option> <option value="sales">Sales</option> <option value="other">Other</option>';
+        }
+        else if(selectedOption=='expense'){
+            if (document.getElementById("commission-area")!=null){
+                document.getElementById("commission-area").remove();
+            }
+            document.getElementById("category-input").previousElementSibling.innerHTML="Category";
+            document.getElementById("category-input").innerHTML
+            ='<option selected value="rent-expense">Rent Expense</option><option value="food">Food</option> <option value="transport">Transport</option> <option value="Education">Education</option> <option value="medical">Medical</option> <option value="entertainment">Entertainment</option> <option value="clothing">Clothing</option> <option value="debt-payment">Debt Payment</option><option value="tax">Tax</option><option value="insurance-premium">Insurance Premium</option><option value="bills">Bills</option> <option value="other">Other</option>';
+
+        }
+        else {
+            document.getElementById("category-input").parentElement.previousElementSibling.append(clone);
+            document.getElementById("category-input").previousElementSibling.innerHTML="Source Account";
+            document.getElementById("category-input").innerHTML
+                ='<option selected value="rent-expense">Turkish Lira Cash</option><option value="food">Create a new account...</option>';
+        }
+    }
+
+    // Seçenek değişikliğini dinlemek için olayı ekleyin
+    document.getElementById("type-input").addEventListener("change", optionChanged);
 
 
 
