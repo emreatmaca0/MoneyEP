@@ -124,4 +124,21 @@ class moneyep extends BaseController
         }
 
     }
+
+    public function myassets()
+    {
+        $session = session();
+        $user_name = $session->get('name');
+
+        $data = [
+            'user_name' => $user_name
+        ];
+        if(!$session->get('isLoggedIn')) {
+            return redirect()->to('moneyep/login');
+        }
+        else
+        {
+            return view('myassets', $data);
+        }
+    }
 }

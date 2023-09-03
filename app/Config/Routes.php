@@ -36,6 +36,7 @@ $routes->post('/moneyep/login', 'moneyep::login');
 $routes->get('/moneyep/signup', 'moneyep::signup');
 $routes->post('/moneyep/signup', 'moneyep::signup');
 $routes->get('/moneyep/dashboard', 'moneyep::dashboard');
+$routes->get('/moneyep/myassets', 'moneyep::myassets');
 
 /*
  * --------------------------------------------------------------------
