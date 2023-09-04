@@ -7,12 +7,124 @@
     <div style="font-size: 30px; color: white">Turkish Lira Cash</div>
     <div style="font-size: 30px; color: white">₺ 0</div>
     <div class="overlay"></div>
-    <button class="card-btn">Edit</button>
+    <button class="card-btn" data-bs-toggle="modal" data-bs-target="#EditAccountModal">Edit</button>
 </div>
 </div>
-<button class="btn">Add Account...</button>
+<button class="btnn"  data-bs-toggle="modal" data-bs-target="#NewAccountModal">Add Account</button>
 
 
+
+
+
+
+<div class="modal fade" id="NewAccountModal" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius: 10px">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="NewAccountModalLabel">New Account</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!--                <div class="row g-3 align-items-center">-->
+                <!--                    <div class="col-auto">-->
+                <!--                        <label for="inputPassword6" class="col-form-label">Type of transaction</label>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-auto">-->
+                <!--                        <select class="form-select" aria-label="Default select example">-->
+                <!--                            <option selected>Revenue</option>-->
+                <!--                            <option value="1">Expense</option>-->
+                <!--                            <option value="2">Remittance</option>-->
+                <!--                        </select>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+                <form>
+                    <div class="mb-3">
+                        <label for="account-name-input" class="col-form-label">Account Name</label>
+                        <input type="text" class="form-control" id="account-name-input">
+                    </div>
+                    <div class="mb-3">
+                        <label for="type-input" class="col-form-label">Type of Account</label>
+                        <select class="form-select" aria-label="Type of account" id="type-input">
+                            <option selected value="cash">Cash</option>
+                            <option value="bank-account">Bank Account</option>
+                            <option value="crypto-wallet">Crypto Wallet</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 currency-container">
+                        <label for="currency-input" class="col-form-label">Currency</label>
+                        <select class="form-select" aria-label="Currency" id="currency-input">
+                            <option selected value="lira">₺</option>
+                            <option value="dollar">$</option>
+                            <option value="euro">€</option>
+                        </select>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EditAccountModal" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius: 10px">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="EditAccountModalLabel">Edit Account</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!--                <div class="row g-3 align-items-center">-->
+                <!--                    <div class="col-auto">-->
+                <!--                        <label for="inputPassword6" class="col-form-label">Type of transaction</label>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-auto">-->
+                <!--                        <select class="form-select" aria-label="Default select example">-->
+                <!--                            <option selected>Revenue</option>-->
+                <!--                            <option value="1">Expense</option>-->
+                <!--                            <option value="2">Remittance</option>-->
+                <!--                        </select>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+                <form>
+                    <div class="mb-3">
+                        <label for="account-name-input" class="col-form-label">Account Name</label>
+                        <input type="text" class="form-control" id="account-name-input">
+                    </div>
+                    <div class="mb-3">
+                        <label for="type-input" class="col-form-label">Type of Account</label>
+                        <select class="form-select" aria-label="Type of account" id="type-input" disabled>
+                            <option selected value="cash">Cash</option>
+                            <option value="bank-account">Bank Account</option>
+                            <option value="crypto-wallet">Crypto Wallet</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 currency-container">
+                        <label for="currency-input" class="col-form-label">Currency</label>
+                        <select class="form-select" aria-label="Currency" id="currency-input" disabled>
+                            <option selected value="lira">₺</option>
+                            <option value="dollar">$</option>
+                            <option value="euro">€</option>
+                        </select>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger">Delete Account</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <style>
 
     .card {
@@ -102,12 +214,12 @@
         transform: translate(-50%, -50%) scale(2);
     }
 
-    .btn {
+    .btnn {
         transition: all 0.3s ease-in-out;
         font-family: "Dosis", sans-serif;
     }
 
-    .btn {
+    .btnn {
         width: 150px;
         height: 60px;
         border-radius: 50px;
@@ -124,17 +236,38 @@
         z-index: 999;
     }
 
-    .btn:hover {
+    .btnn:hover {
         transform: translateY(3px);
         box-shadow: none;
     }
 
-    .btn:active {
+    .btnn:active {
         opacity: 0.5;
     }
 
 
 
 </style>
+
+<script>
+
+    function optionChanged() {
+        var selectedOption = document.getElementById("type-input").value;
+        if (selectedOption == "cash") {
+            document.getElementById("currency-input").innerHTML='<option selected value="lira">₺</option><option value="dollar">$</option><option value="euro">€</option>';
+        }
+        else if (selectedOption=="bank-account")
+        {
+            document.getElementById("currency-input").innerHTML='<option selected value="lira">₺</option><option value="dollar">$</option><option value="euro">€</option>';
+        }
+        else if (selectedOption=="crypto-wallet")
+        {
+            document.getElementById("currency-input").innerHTML='<option selected value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="tether">Tether</option>';
+        }
+    }
+
+    document.getElementById("type-input").addEventListener("change", optionChanged);
+
+</script>
 
 <?=$this->endSection()?>
