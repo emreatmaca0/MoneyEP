@@ -209,9 +209,9 @@
                         <label for="amount-input" class="col-form-label">Amount</label>
                         <div class="input-group mb-3">
                             <select class="form-select" aria-label="Currency">
-                                <option selected value="1">₺</option>
-                                <option value="2">$</option>
-                                <option value="3">€</option>
+                                <option selected value="lira">₺</option>
+                                <option value="dollar">$</option>
+                                <option value="euro">€</option>
                             </select>
                             <input type="text" class="form-control" placeholder="102,55" aria-label="Amount" id="amount-input">
                         </div>
@@ -299,10 +299,11 @@ clone.lastElementChild.lastElementChild.id="commission-input";
             if(document.getElementById("debt-container")!=null){
                 document.getElementById("debt-container").remove();
             }
-            document.getElementById("category-input").parentElement.previousElementSibling.append(clone);
-            document.getElementById("category-input").previousElementSibling.innerHTML="Source Account";
-            document.getElementById("category-input").innerHTML
-                ='<option selected value="rent-expense">Turkish Lira Cash</option><option value="food">Create a new account...</option>';
+            var category_input=document.getElementById("category-input");
+            category_input.parentElement.previousElementSibling.append(clone);
+            category_input.previousElementSibling.innerHTML="Source Account";
+            category_input.innerHTML
+                ='<option selected value="1">Turkish Lira Cash</option><option value="0">Create a new account...</option>';
         }
     }
 
@@ -311,15 +312,16 @@ clone.lastElementChild.lastElementChild.id="commission-input";
     document.getElementById("category-input").addEventListener("change", categoryChanged);
 
     function categoryChanged(){
-        if(document.getElementById("category-input").value=="debt"||document.getElementById("category-input").value=="debt-payment")
+        var category_input=document.getElementById("category-input");
+        if(category_input.value=="debt"||category_input.value=="debt-payment")
         {
-            const debt= document.getElementById("category-input").parentElement;
+            const debt= category_input.parentElement;
             const clone = debt.cloneNode(true);
             clone.id="debt-container"
             clone.firstElementChild.innerHTML="Debt";
             clone.lastElementChild.id="debt-input";
-            clone.lastElementChild.innerHTML='<option selected value="rent-expense">Turkish Lira Cash</option><option value="food">Create a new account...</option>';
-            document.getElementById("category-input").parentElement.append(clone);
+            clone.lastElementChild.innerHTML='<option selected value="1">Turkish Lira Cash</option><option value="0">Create a new account...</option>';
+            category_input.parentElement.append(clone);
         }
         else
         {

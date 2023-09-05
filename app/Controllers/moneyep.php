@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Users_Model;
+use App\Models\Accounts_Model;
 
 class moneyep extends BaseController
 {
@@ -157,5 +158,12 @@ class moneyep extends BaseController
         {
             return view('mydebts', $data);
         }
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('moneyep');
     }
 }

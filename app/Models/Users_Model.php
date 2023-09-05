@@ -10,5 +10,5 @@ class Users_Model extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['name', 'email', 'password'];
+    protected $allowedFields = ['id','name', 'email', 'password', 'default_currency'];
 }

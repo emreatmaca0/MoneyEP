@@ -39,7 +39,7 @@
                 <!--                    </div>-->
                 <!--                </div>-->
 
-                <form>
+                <form id="create-account-form" action="/moneyep/create-account" method="post">
                     <div class="mb-3">
                         <label for="account-name-input" class="col-form-label">Account Name</label>
                         <input type="text" class="form-control" id="account-name-input">
@@ -65,7 +65,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="create-account-form-submitbutton">Save changes</button>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
                 <!--                    </div>-->
                 <!--                </div>-->
 
-                <form>
+                <form id="edit-account-form" action="/moneyep/edit-account" method="post">
                     <div class="mb-3">
                         <label for="account-name-input" class="col-form-label">Account Name</label>
                         <input type="text" class="form-control" id="account-name-input">
@@ -120,7 +120,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger">Delete Account</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="edit-account-form-submitbutton">Save changes</button>
             </div>
         </div>
     </div>
@@ -250,6 +250,14 @@
 </style>
 
 <script>
+
+
+
+    function formsub() {
+        document.getElementById("create-account-form").submit();
+    }
+    document.getElementById("create-account-form-submitbutton").addEventListener("click", formsub);
+
 
     function optionChanged() {
         var selectedOption = document.getElementById("type-input").value;
