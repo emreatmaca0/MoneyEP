@@ -43,6 +43,7 @@ class moneyep extends BaseController
 
                 if ($user && password_verify($password, $user['password'])) {
                     $session = session();
+                    $session->set('id', $user['id']);
                     $session->set('name', $user['name']);
                     $session->set('email', $user['email']);
                     $session->set('isLoggedIn', true);
@@ -129,16 +130,13 @@ class moneyep extends BaseController
     public function myassets()
     {
         $session = session();
-        $user_name = $session->get('name');
-
-        $data = [
-            'user_name' => $user_name
-        ];
         if(!$session->get('isLoggedIn')) {
             return redirect()->to('moneyep/login');
         }
         else
         {
+            $accountModel= new Accounts_Model();
+            $data['accounts'] = $accountModel->where('user_id', $session->get('id'))->findAll();
             return view('myassets', $data);
         }
     }
@@ -165,5 +163,46 @@ class moneyep extends BaseController
         $session = session();
         $session->destroy();
         return redirect()->to('moneyep');
+    }
+
+    public function add_account()
+    {
+        $session = session();
+        if(!$session->get('isLoggedIn')) {
+            return redirect()->to('moneyep/login');
+        }
+        else
+        {
+            if ($this->request->getPost()) {
+                $accountModel = new Accounts_Model();
+                $validation = \Config\Services::validation();
+
+                $rules = [
+                    'name' => 'required|regex_match[^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]*$]|min_length[3]|max_length[30]',
+                    'type' => 'required',
+                    'currency' => 'required'
+                ];
+
+                if ($this->validate($rules)) {
+                    $clean_name = esc($this->request->getPost('name'));
+                    $clean_type = esc($this->request->getPost('type'));
+                    $clean_currency = esc($this->request->getPost('currency'));
+                    $accountData = [
+
+                        'name' => $clean_name,
+                        'type' => $clean_type,
+                        'currency' => $clean_currency,
+                        'user_id' => $session->get('id')
+                    ];
+                    $accountModel->insert($accountData);
+
+                    return redirect()->to('/moneyep/myassets');
+                } else {
+                    $data['validation_error'] = $validation->getErrors();
+                    return view('myassets', $data);
+                }
+            }
+
+        }
     }
 }

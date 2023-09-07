@@ -39,6 +39,7 @@ $routes->get('/moneyep/dashboard', 'moneyep::dashboard');
 $routes->get('/moneyep/myassets', 'moneyep::myassets');
 $routes->get('/moneyep/mydebts', 'moneyep::mydebts');
 $routes->get('/moneyep/logout', 'moneyep::logout');
+$routes->post('/moneyep/create-account', 'moneyep::add_account');
 
 /*
  * --------------------------------------------------------------------

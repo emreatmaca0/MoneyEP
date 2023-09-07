@@ -9,6 +9,10 @@
     <div class="overlay"></div>
     <button class="card-btn" data-bs-toggle="modal" data-bs-target="#EditAccountModal">Edit</button>
 </div>
+
+    <?php foreach ($accounts as $account):?>
+    <?php echo $account['name'];?>
+    <?php endforeach;?>
 </div>
 <button class="btnn"  data-bs-toggle="modal" data-bs-target="#NewAccountModal">Add Account</button>
 
@@ -42,11 +46,11 @@
                 <form id="create-account-form" action="/moneyep/create-account" method="post">
                     <div class="mb-3">
                         <label for="account-name-input" class="col-form-label">Account Name</label>
-                        <input type="text" class="form-control" id="account-name-input">
+                        <input type="text" class="form-control" id="account-name-input" name="name">
                     </div>
                     <div class="mb-3">
                         <label for="type-input" class="col-form-label">Type of Account</label>
-                        <select class="form-select" aria-label="Type of account" id="type-input">
+                        <select class="form-select" aria-label="Type of account" id="type-input" name="type">
                             <option selected value="cash">Cash</option>
                             <option value="bank-account">Bank Account</option>
                             <option value="crypto-wallet">Crypto Wallet</option>
@@ -54,12 +58,25 @@
                     </div>
                     <div class="mb-3 currency-container">
                         <label for="currency-input" class="col-form-label">Currency</label>
-                        <select class="form-select" aria-label="Currency" id="currency-input">
+                        <select class="form-select" aria-label="Currency" id="currency-input" name="currency">
                             <option selected value="lira">₺</option>
                             <option value="dollar">$</option>
                             <option value="euro">€</option>
                         </select>
                     </div>
+                    <?php if (isset($validation_error)): ?>
+                        <div class="mb-3">
+                            <ul>
+
+
+                                <?php foreach ($validation_error as $item): ?>
+                                    <li style="color: red"><?php echo $item; ?></li>
+                                    <?php endforeach; ?>
+
+
+                            </ul>
+                        </div>
+                    <?php endif; ?>
 
                 </form>
 

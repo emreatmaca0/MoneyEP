@@ -10,5 +10,5 @@ class Accounts_Model extends \CodeIgniter\Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['name', 'type', 'currency', 'amount', 'user_id'];
+    protected $allowedFields = ['id','name', 'type', 'currency', 'amount', 'user_id'];
 }
